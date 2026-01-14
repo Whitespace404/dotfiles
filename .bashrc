@@ -127,3 +127,5 @@ crun() {
     gcc -Wall "$1" -o "$output_name" && ./"$output_name"
 }
 
+
+eval "$(thefuck --alias)"
