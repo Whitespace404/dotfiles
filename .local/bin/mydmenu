@@ -1,0 +1,11 @@
+#!/bin/sh
+
+dmenu_run \
+-fn 'SourceCodePro-14' \
+-nb '#000000' \
+-nf '#c2c2c2' \
+-sf '#000000' \
+-sb '#c2c2c2' \
+-i \
+-p "Run: "
+

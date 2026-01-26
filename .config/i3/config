@@ -6,14 +6,13 @@
 #
 
 # i3 config file (v4)
-#
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Ubuntu Sans 10
+font pango:Source Code Pro 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -36,11 +35,6 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -55,7 +49,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+ bindsym $mod+d exec --no-startup-id ~/.local/bin/mydmenu
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -110,7 +104,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+# bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -185,10 +179,34 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
-        
-}
+# bar {
+#       status_command i3status
+#       position top 
+#       font pango:Source Code Pro 11
+#       mode hide
+#       workspace_buttons yes
+# }
 
-exec "setxkbmap us"
+exec_always "setxkbmap us"
+exec_always "xinput set-prop 10 326 1"
 exec_always for id in $(xinput list | grep "pointer" | cut -d '=' -f 2 | cut -f 1); do xinput --set-prop $id 'libinput Accel Profile Enabled' 0, 1; done
+
+bindsym $mod+Shift+x exec i3lock -c 2f2c2c && systemctl suspend
+bindsym $mod+z exec "i3lock -c 2f2c2c" 
+
+exec --no-startup-id feh --bg-fill ~/Documents/cloned/walls/digital/a_group_of_trees_in_a_snowy_field.jpg
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+bindsym --release Print exec scrot ~/Pictures/ccreenshot_$(date +%Y-%m-%d_%H:%M:%S).png
+bindsym --release Ctrl+Shift+Print exec scrot -s -f -o "/tmp/image.png" && xclip -selection clipboard -t image/png -i /tmp/image.png
+for_window [class="^.*"] border pixel 2
+
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
