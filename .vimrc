@@ -11,8 +11,6 @@ endif
 
 hi clear
 
-let g:colors_name = "term_mono"
-
 hi Normal       ctermfg=NONE  ctermbg=NONE
 hi Identifier   ctermfg=NONE  ctermbg=NONE
 hi Special      ctermfg=NONE  ctermbg=NONE
@@ -20,8 +18,9 @@ hi Type         ctermfg=NONE  ctermbg=NONE
 hi PreProc      ctermfg=NONE  ctermbg=NONE
 
 hi Comment      ctermfg=244   cterm=NONE
-
-hi Statement    ctermfg=NONE  cterm=bold 
+hi Function     ctermfg=NONE  cterm=NONE
+hi Constant     ctermfg=NONE  cterm=NONE
+hi Statement    ctermfg=NONE  cterm=NONE
 
 hi LineNr       ctermfg=239   ctermbg=NONE
 hi CursorLine   ctermbg=235   cterm=NONE    
